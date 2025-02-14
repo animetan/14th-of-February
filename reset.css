@@ -1,0 +1,62 @@
+/* Сброс отступов и полей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Наследуемый шрифт */
+  html {
+    font-size: 16px;
+    font-family: sans-serif;
+  }
+  
+  /* Убираем стили списков */
+  ul, ol {
+    list-style: none;
+  }
+  
+  /* Убираем подчеркивание у ссылок */
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Убираем обводку у кнопок и инпутов при фокусе (но оставляем для доступности, если нужно) */
+  button, input, textarea {
+    border: none;
+    outline: none;
+    font: inherit;
+    background: none;
+  }
+  
+  /* Сделаем изображения отзывчивыми */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Базовые стили для таблиц */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  /* Убираем специфические стили кнопок */
+  button {
+    cursor: pointer;
+  }
+  
+  /* Убираем доп. стили у форм */
+  input, textarea, select, button {
+    font: inherit;
+  }
+  
+  /* Убираем выделение текста в некоторых браузерах */
+  ::selection {
+    background: #b3d4fc;
+    color: #000;
+  }
+  
+  

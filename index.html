@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css?rnd=4">
+    <link rel="stylesheet" href="reset.css">
+
+    <!-- Мета-теги для красивого отображения при шеринге -->
+    <title>💝 Будь моей валентинкой! 💝</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://iloveyou.devportfolio.ru/">
+    <meta property="og:title" content="💝 Будь моей валентинкой! 💝">
+    <meta property="og:image"
+        content="https://media.discordapp.net/attachments/683979559577714728/1338635787478241410/1-1.png?ex=67abcd3a&is=67aa7bba&hm=b9a6909d59b8224c74ed5e004cbd698cb36c8dc2afee5870be69a151845a053f&=&format=webp&quality=lossless&width=502&height=671">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="http://iloveyou.devportfolio.ru/">
+    <meta property="twitter:title" content="💝 Будь моей валентинкой! 💝">
+    <meta property="twitter:image"
+        content="https://media.discordapp.net/attachments/683979559577714728/1338635787478241410/1-1.png?ex=67abcd3a&is=67aa7bba&hm=b9a6909d59b8224c74ed5e004cbd698cb36c8dc2afee5870be69a151845a053f&=&format=webp&quality=lossless&width=502&height=671">
+
+    <!-- Тема и цвет для мобильных браузеров -->
+    <meta name="theme-color" content="#FF69B4">
+    <meta name="msapplication-navbutton-color" content="#FF69B4">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#FF69B4">
+</head>
+
+<body>
+    <div class="love__container">
+        <div class="love">
+            <div class="love__circle"></div>
+            <div class="love__block">
+                <div class="love__block--fake__close">✕</div>
+
+                <div class="love__content" id="initialContent">
+                    <div class="love__image__heart">
+                        <img src="images/hearts.png" alt="">
+                    </div>
+                    <h1>Ты будешь моей валентинкой?</h1>
+                    <div class="love__buttons">
+                        <button class="love__button-yes">Да</button>
+                        <button class="love__button-no">Нет</button>
+                    </div>
+                </div>
+
+                <div class="love__content love__content--hidden" id="successContent">
+                    <img src="images/dino01.png" alt="Love Heart" class="love__image">
+                    <h2>Я так и знал! ❤️</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="hearts-container"></div>
+
+
+    <script>
+        const closeBtn = document.querySelector('.love__block--fake__close');
+        const noButton = document.querySelector('.love__button-no');
+        const yesButton = document.querySelector('.love__button-yes');
+        const loveBlock = document.querySelector('.love__block');
+        const loveImage = document.querySelector('.love__image__heart');
+        let clickCount = 0;
+
+        closeBtn.addEventListener('click', () => {
+            closeBtn.style.transform = 'scale(0)';
+            closeBtn.style.opacity = '0';
+        });
+
+        noButton.addEventListener('click', () => {
+            clickCount++;
+
+            if (clickCount < 5) {
+                const maxX = Math.min(loveBlock.clientWidth, window.innerWidth) - noButton.clientWidth;
+                const maxY = Math.min(loveBlock.clientHeight, window.innerHeight) - noButton.clientHeight;
+
+                const randomX = Math.min(Math.max(0, Math.random() * maxX), 74);
+                const randomY = Math.max(0, Math.random() * maxY);
+
+                noButton.style.position = 'absolute';
+                noButton.style.transition = 'all 0.3s ease';
+                noButton.style.left = `${randomX}px`;
+                noButton.style.top = `${randomY}px`;
+            }
+
+            const loveCircle = document.querySelector('.love__circle');
+            loveCircle.classList.add('active');
+            setTimeout(() => loveCircle.classList.remove('active'), 400);
+
+            // Увеличение кнопки "Да"
+            if (clickCount < 5) {
+                const currentScale = 1 + (clickCount * 0.2);
+                yesButton.style.transform = `scale(${currentScale})`;
+            }
+
+            if (clickCount === 5) {
+                noButton.style.scale = '0';
+                noButton.style.opacity = '0';
+                yesButton.classList.add('love__button-yes--expanded');
+                loveImage.style.scale = '0';
+            }
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.innerHTML = '❤️';
+            document.querySelector('.hearts-container').appendChild(heart);
+
+            heart.addEventListener('animationend', () => heart.remove());
+        }
+
+        yesButton.addEventListener('click', () => {
+            const initialContent = document.getElementById('initialContent');
+            const successContent = document.getElementById('successContent');
+
+            const loveCircle = document.querySelector('.love__circle');
+            loveCircle.classList.add('active2');
+
+            loveBlock.style.scale = '0.8';
+            setTimeout(() => {
+                loveBlock.style.scale = '1';
+            }, 200);
+
+            setTimeout(() => {
+                loveCircle.classList.remove('active2');
+                loveCircle.classList.add('active3');
+            }, 500);
+
+            setTimeout(() => {
+                loveCircle.classList.remove('active3');
+            }, 1000);
+
+            initialContent.style.opacity = '0';
+
+            setTimeout(() => {
+                initialContent.classList.add('love__content--hidden');
+                successContent.classList.remove('love__content--hidden');
+                successContent.style.opacity = '1';
+                successContent.classList.add('love__content--visible');
+            }, 300);
+
+            setInterval(createHeart, 300);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const hearts = ["💝", "❤️", "💖", "💘", "💗", "💕", "💞"];
+            let index = 0;
+
+            setInterval(() => {
+                document.title = `${hearts[index]} Будь моей валентинкой! ${hearts[index]}`;
+                index = (index + 1) % hearts.length;
+            }, 1000);
+        });
+
+    </script>
+</body>
+</html>
